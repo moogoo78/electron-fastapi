@@ -5,7 +5,36 @@
   "main": "renderer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "package": "npm run -s package-python && npm run -s package-electron && npm run -s package-cleanup",
+    "package-python": "pyinstaller -w --onefile --add-data web_app/app/templates;templates --add-data web_app/app/static;static web_app/run_app.py --distpath dist-python",
+    "package-electron": "electron-builder",
+    "package-cleanup": "rm -rf build && rm -rf run_app.spec && rm -rf dist-python"
+  },
+  "build": {
+    "appId": "com.electron-fastapi.my-app",
+    "productName": "ElectronFastapi",
+    "asar": false,
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "renderer.js",
+      "icon.png",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "dist-python/",
+        "to": "app/dist-python",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   },
   "author": "",
   "license": "ISC",

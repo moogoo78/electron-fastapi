@@ -1,7 +1,17 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
-function createWindow () {
+const startPythonSubprocess = () => {
+  //let script = getPythonScriptPath();
+  //if (isRunningInBundle()) {
+  //subpy = require("child_process").execFile(script, []);
+  //} else {
+  //subpy = require("child_process").spawn("python", [script]);
+  //}
+  const startServer = require('child_process').execFile('main.exe',[])
+};
+
+const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -14,6 +24,7 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
+  startPythonSubprocess();
   createWindow()
 
   app.on('activate', () => {
